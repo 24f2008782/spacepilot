@@ -1,10 +1,11 @@
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace CDClean.Core;
 
 public sealed class AppSettings
 {
+    /// <summary>Schema version written by <see cref="SettingsStore"/>. Missing in 1.5.x files, which is treated as version 1.</summary>
+    public int SchemaVersion { get; set; } = SettingsStore.CurrentVersion;
     public string BackupRoot { get; set; } = @"E:\cdclean-backups";
     public int KeepDays { get; set; } = 30;
     public string RulesPath { get; set; } = "";
@@ -29,27 +30,23 @@ public sealed class AppSettings
     public static string DataDir =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CDClean");
     public static string LogDir => Path.Combine(DataDir, "logs");
-    private static string File_ => Path.Combine(DataDir, "settings.json");
 
     public string ResolvedRulesPath =>
         string.IsNullOrWhiteSpace(RulesPath) ? Path.Combine(AppContext.BaseDirectory, "rules.toml") : RulesPath;
 
+    /// <summary>A notice from the last load, shown on the Settings page when a file could not be used.</summary>
+    public static string? LastLoadNotice { get; private set; }
+
     public static AppSettings Load()
     {
-        try
-        {
-            if (File.Exists(File_))
-                return JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(File_)) ?? new AppSettings();
-        }
-        catch { /* bad file: fall back to defaults */ }
-        return new AppSettings();
+        var result = SettingsStore.Load();
+        LastLoadNotice = result.Notice;
+        return result.Settings;
     }
 
-    public void Save()
-    {
-        Directory.CreateDirectory(DataDir);
-        File.WriteAllText(File_, JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true }));
-    }
+    public void Save() => SettingsStore.Save(this);
+
+    public static void ClearLoadNotice() => LastLoadNotice = null;
 }
 
 public sealed class GridLayout

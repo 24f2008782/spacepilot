@@ -71,6 +71,22 @@ public static class Ui
         return await Show(d) == ContentDialogResult.Primary;
     }
 
+    /// <summary>Typed confirmation for a dangerous action. The primary button stays disabled until the token matches.</summary>
+    public static async Task<bool> TypedConfirm(XamlRoot root, string title, string text, string token, string yes = "Unlock")
+    {
+        var box = new TextBox { PlaceholderText = token, IsTextPredictionEnabled = false };
+        var body = new StackPanel { Spacing = 8 };
+        body.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap });
+        body.Children.Add(box);
+        var d = new ContentDialog
+        {
+            XamlRoot = root, Title = title, Content = body, PrimaryButtonText = yes,
+            CloseButtonText = "Cancel", DefaultButton = ContentDialogButton.Close, IsPrimaryButtonEnabled = false,
+        };
+        box.TextChanged += (_, _) => d.IsPrimaryButtonEnabled = box.Text.Trim() == token;
+        return await Show(d) == ContentDialogResult.Primary;
+    }
+
     public static async Task Info(XamlRoot root, string title, string text)
     {
         var d = new ContentDialog

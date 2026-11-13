@@ -1,7 +1,7 @@
-# Verification record — SpacePilot 1.5.3
+# Verification record - SpacePilot 1.6.0
 
-**Date:** 2026-11-12  
-**Scope:** non-admin release pass  
+**Date:** 2026-11-13
+**Scope:** non-admin release pass
 **Platform:** Windows 11, x64  
 **Build:** Release, framework-dependent, `win-x64`
 
@@ -9,14 +9,14 @@
 
 **Accepted for the non-admin release pass.** No release-blocking functional or safety defect remains.
 
-Tier 2 final verification is complete. The remaining items are documented limitations, not blockers for this pass.
+Tier 2 final verification is complete. Batch 3.1 adds the Settings rewrite and safer settings persistence. The remaining items are documented limitations, not blockers for this pass.
 
 ## Build and tests
 
 | Check | Result |
 |---|---|
 | Release build (`CDClean.App`) | 0 warnings, 0 errors |
-| Core tests | 107/107 passed |
+| Core tests | 112/112 passed |
 | Smoke test | all 15 pages opened |
 | Full UI suite | all checks passed; 1 foreground-only check skipped |
 | Disk Map UI suite | all 19 checks passed |
@@ -36,6 +36,21 @@ All destructive checks used synthetic folders. Real user data was not modified.
 | Maintenance analysis without elevation | WinSxS and VSS reported `unavailable — Requires administrator`, not zero |
 | Orphan services | 8 reported, down from 424; known `1394ohci`, `ACPI`, and `AFD` false positives gone |
 | Developer caches | 2,477 caches found; `node_modules` path present; UI stayed responsive |
+
+## Settings (Batch 3.1)
+
+| Check | Result |
+|---|---|
+| 14-category sidebar | Present |
+| Search `vault` | Finds Vault size cap; result opens Backups & recovery |
+| Search `protected` | Finds Protected paths |
+| Multi-word search `low space` | Finds Low-space warning |
+| Reset field/category/all | Core tests pass; UI reset controls wired |
+| Atomic save and `.bak` | Core tests pass; second save keeps the previous file |
+| Corrupt file | Core test falls back to defaults with a notice; focused UI check confirmed the notice is visible; real settings were backed up and restored |
+| Newer schema | Core test falls back to defaults with a notice |
+| Advanced unlock | Wrong word keeps Unlock disabled; `ADVANCED` unlocks the session |
+| Dangerous changes | Custom `RulesPath`, clearing `ProtectedPaths`, and `VaultCapGb = 0` are guarded |
 
 ## Clean preview
 

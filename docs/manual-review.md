@@ -1,9 +1,9 @@
-# SpacePilot 1.5.3 — Manual Review Guide
+# SpacePilot 1.6.0 — Manual Review Guide
 
 **Purpose:** Walk through every screen read-only on your E: drive. Do **not** delete, archive, recycle, uninstall, or run any admin task. This guide is only for scanning and observing.
 
 **App binary:** `publish\spacepilot\CDClean.exe`
-**Version:** 1.5.3 (window title "SpacePilot 1.5.3")
+**Version:** 1.6.0 (window title "SpacePilot 1.6.0")
 **Data folder:** `%LOCALAPPDATA%\CDClean` (settings, logs, audit)
 **No data is changed by this guide.**
 
@@ -15,7 +15,7 @@ Tick each box in Obsidian as you complete it. Write notes under each screen if s
 
 - [x] Close other heavy apps (browsers, games) to keep RAM free; the app targets 250–300 MB during scans.
 - [x] Make sure E: drive is connected and readable.
-- [x] Launch `CDClean.exe`. Window title should read "SpacePilot 1.5.3".
+- [x] Launch `CDClean.exe`. Window title should read "SpacePilot 1.6.0".
 - [x] Window should be at least 1024×640; sidebar collapses to icons below 1100 px width.
 
 ---
@@ -203,9 +203,16 @@ For the scheduling add more: Scheduling will come later because we are still in 
 ---
 
 ## 11. Settings
-**What to do:** Browse the settings sections. Do **not** change or save.
+**What to do:** Browse the settings categories, search, and Advanced unlock. Do **not** save a setting or clear a protected path.
 
-- [x] Page opens without crash.
+- [x] Page opens without crash and shows the 14-category sidebar.
+- [x] Search for `vault` shows the vault-size setting and opens Backups & recovery.
+- [x] Search for `protected` shows the protected-paths setting.
+- [x] Selecting a result opens its category.
+- [x] Advanced shows the typed unlock box; a wrong word keeps Unlock disabled.
+- [x] Typing `ADVANCED` enables Unlock and shows the session-unlocked state.
+- [x] Reset category on a placeholder category explains that there is nothing to reset.
+- [x] The About card shows `SpacePilot 1.6.0` and the notices buttons.
 
 ---
 

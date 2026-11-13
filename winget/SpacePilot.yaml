@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
 # Draft manifest. Replace the SHA-256 value after the GitHub release asset is built.
 PackageIdentifier: SpacePilot.SpacePilot
-PackageVersion: 1.5.3
+PackageVersion: 1.6.0
 Platform:
   - Windows.Desktop
 MinimumOSVersion: 10.0.17763.0
@@ -19,15 +19,15 @@ InstallerSwitches:
 UpgradeBehavior: install
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/24f2008782/spacepilot/releases/download/v1.5.3/SpacePilot-1.5.3-x64.zip
-    InstallerSha256: 269b56548c7e40d5710110a312f78360537c5ea0567edb0374e6e03f8a023272
+    InstallerUrl: https://github.com/24f2008782/spacepilot/releases/download/v1.6.0/SpacePilot-1.6.0-x64.zip
+    InstallerSha256: a033eee7e3c92d322dd8db9ea070f02a0969b175764b5b5b6456fd0da3ac137a
 ManifestType: installer
 ManifestVersion: 1.6.0
 
 ---
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
 PackageIdentifier: SpacePilot.SpacePilot
-PackageVersion: 1.5.3
+PackageVersion: 1.6.0
 PackageLocale: en-US
 Publisher: SpacePilot
 PublisherUrl: https://github.com/24f2008782/spacepilot
@@ -43,7 +43,7 @@ ManifestVersion: 1.6.0
 ---
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.6.0.schema.json
 PackageIdentifier: SpacePilot.SpacePilot
-PackageVersion: 1.5.3
+PackageVersion: 1.6.0
 DefaultLocale: en-US
 ManifestType: version
 ManifestVersion: 1.6.0

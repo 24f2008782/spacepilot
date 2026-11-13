@@ -11,10 +11,10 @@ The executable is still named `CDClean.exe` for historical reasons. The product 
 
 ## Status
 
-Version **1.5.3** is verified for the non-admin release pass on 2026-11-12:
+Version **1.6.0** is verified for the non-admin release pass on 2026-11-13:
 
 - Release build: 0 warnings, 0 errors.
-- Core tests: **107/107 passed**.
+- Core tests: **112/112 passed**.
 - Smoke test: all 15 pages open.
 - Full UI suite: all checks pass, with one foreground-only keyboard check skipped.
 - Disk Map UI suite: all 19 checks pass.
@@ -38,7 +38,7 @@ See [docs/verification.md](docs/verification.md) for the detailed verification r
 | **System tools** | Admin-task cards, orphan-service reporting, startup inventory, MSI cache, and VHDX listing. Read-only analysis comes first. |
 | **Schedule** | Weekly or daily safe-rule runs. Manual rules are queued for review instead of being deleted silently. |
 | **Rules** | Editable `rules.toml` with validation and a save check. |
-| **Settings** | Backup location, retention, vault cap, rules path, low-space warning, audit redaction, and advanced safety controls. |
+| **Settings** | 14-category sidebar with search, per-field/category resets, atomic versioned settings with a `.bak` copy, and a session-scoped `ADVANCED` unlock for dangerous changes. |
 
 ## Safety model
 
@@ -64,7 +64,7 @@ Read [docs/EULA.md](docs/EULA.md) for the safety and use notice, and [docs/PRIVA
 
 ## Install
 
-1. Download `SpacePilot-1.5.3-x64.zip` from the [latest release](https://github.com/24f2008782/spacepilot/releases).
+1. Download `SpacePilot-1.6.0-x64.zip` from the [latest release](https://github.com/24f2008782/spacepilot/releases).
 2. Extract it to a folder you control.
 3. Run `CDClean.exe`.
 4. Keep `rules.toml` next to the executable, or point Settings to another rules file.

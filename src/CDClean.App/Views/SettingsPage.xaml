@@ -3,24 +3,55 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Grid Padding="28,20" ColumnSpacing="20">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="260"/><ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="280"/>
+      <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
-    <StackPanel Spacing="8">
+
+    <Grid Grid.Column="0" RowSpacing="8">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
       <TextBox x:Name="SearchBox" PlaceholderText="Search settings" TextChanged="SearchBox_TextChanged"/>
-      <ListView x:Name="CategoryList" SelectionChanged="CategoryList_SelectionChanged">
+
+      <ListView x:Name="CategoryList" Grid.Row="1" SelectionChanged="CategoryList_SelectionChanged" SelectionMode="Single">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <TextBlock Text="{Binding}" FontSize="14"/>
+            <TextBlock Text="{Binding}" FontSize="14" TextWrapping="Wrap"/>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
-        <Button Content="Reset category" Click="ResetCategory_Click"/>
-        <Button Content="Reset all" Click="ResetAll_Click"/>
+
+      <ListView x:Name="SearchResultsList" Grid.Row="1" Visibility="Collapsed" SelectionChanged="SearchResultsList_SelectionChanged" SelectionMode="Single">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <StackPanel AutomationProperties.Name="{Binding Name}" Spacing="2">
+              <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding Detail}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" TextWrapping="Wrap"/>
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <StackPanel Grid.Row="2" Spacing="8" Margin="0,8,0,0">
+        <Button Content="Reset category" Click="ResetCategory_Click" HorizontalAlignment="Stretch"/>
+        <Button Content="Reset all" Click="ResetAll_Click" HorizontalAlignment="Stretch"/>
       </StackPanel>
-    </StackPanel>
-    <ScrollViewer Grid.Column="1">
-      <StackPanel x:Name="ContentPanel" Spacing="12" MaxWidth="760" HorizontalAlignment="Left"/>
-    </ScrollViewer>
+    </Grid>
+
+    <Grid Grid.Column="1" RowSpacing="12">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <InfoBar x:Name="SettingsNotice" Title="Settings notice" Severity="Warning" IsClosable="True" IsOpen="False"/>
+
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel x:Name="ContentPanel" Spacing="12" MaxWidth="820" HorizontalAlignment="Left"/>
+      </ScrollViewer>
+    </Grid>
   </Grid>
 </Page>
