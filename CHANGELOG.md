@@ -17,6 +17,7 @@ All notable changes to SpacePilot are recorded here.
 
 - Settings schema version is now `1`; existing 1.5.x files load without migration.
 - Empty Settings categories are explicit placeholders rather than invented controls.
+- Settings saves and resets apply the audit-redaction flag immediately, without requiring a restart.
 - The UI test suite now searches for flyout controls in the app's popup windows, fixing the Filters check in background mode.
 
 ### Verified

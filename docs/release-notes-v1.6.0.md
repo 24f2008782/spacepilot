@@ -9,6 +9,7 @@ This release is Batch 3.1: a real Settings page and safer settings persistence. 
 - **Per-field reset** buttons, **Reset category**, and **Reset all**. Reset all requires two confirmations. Dangerous resets also require the `ADVANCED` unlock.
 - Empty categories are explicit placeholders. This batch does not invent settings without a backing field.
 - The About card shows the installed version and opens the logs folder, data folder, third-party notices, privacy policy, safety notice, and GitHub releases.
+- Saving or resetting the audit-redaction setting applies it immediately; no restart is needed.
 
 ## Safer settings storage
 

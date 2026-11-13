@@ -214,7 +214,7 @@ public sealed partial class SettingsPage : Page
             SettingsStore.CopyFrom(before, State.Settings);
             return;
         }
-        State.Settings.Save();
+        Persist();
         BuildPanel(_selected);
     }
 
@@ -227,7 +227,7 @@ public sealed partial class SettingsPage : Page
         catch { status.Text = "That path is not valid."; return; }
         if (State.Settings.ProtectedPaths.Contains(path, StringComparer.OrdinalIgnoreCase)) { status.Text = "Already protected."; return; }
         State.Settings.ProtectedPaths.Add(path);
-        State.Settings.Save();
+        Persist();
         BuildPanel(_selected);
     }
 
@@ -273,7 +273,7 @@ public sealed partial class SettingsPage : Page
             var days = double.IsNaN(keep.Value) ? 30 : (int)Math.Clamp(keep.Value, 1.0, 3650.0);
             State.Settings.BackupRoot = folder;
             State.Settings.KeepDays = days;
-            State.Settings.Save();
+            Persist();
             status.Text = "Saved.";
         };
         AddCard("Save backup settings", "Saves the folder and retention together using the atomic settings store.", SaveRow(save, status));
@@ -294,7 +294,7 @@ public sealed partial class SettingsPage : Page
         save.Click += (_, _) =>
         {
             State.Settings.LowSpaceGb = double.IsNaN(low.Value) ? 60 : (int)Math.Clamp(low.Value, 1.0, 2000.0);
-            State.Settings.Save();
+            Persist();
             status.Text = "Saved.";
         };
         AddCard("Save notification settings", "The value is stored locally and checked when the Dashboard loads.", SaveRow(save, status));
@@ -315,8 +315,7 @@ public sealed partial class SettingsPage : Page
         save.Click += (_, _) =>
         {
             State.Settings.RedactAudit = redact.IsChecked == true;
-            Audit.Redact = State.Settings.RedactAudit;
-            State.Settings.Save();
+            Persist();
             status.Text = "Saved.";
         };
         AddCard("Save privacy settings", "Changes apply to new audit entries.", SaveRow(save, status));
@@ -379,7 +378,7 @@ public sealed partial class SettingsPage : Page
                 var path = rules.Text.Trim();
                 if (path.Length > 0 && !File.Exists(path)) { rulesStatus.Text = "Rules file not found."; return; }
                 State.Settings.RulesPath = path;
-                State.Settings.Save();
+                Persist();
                 rulesStatus.Text = "Saved.";
             };
             panel.Children.Add(FieldRow(rules, nameof(AppSettings.RulesPath)));
@@ -395,7 +394,7 @@ public sealed partial class SettingsPage : Page
             capSave.Click += (_, _) =>
             {
                 State.Settings.VaultCapGb = double.IsNaN(cap.Value) ? 0 : (int)Math.Clamp(cap.Value, 0.0, 10000.0);
-                State.Settings.Save();
+                Persist();
                 capStatus.Text = State.Settings.VaultCapGb == 0 ? "Saved. No cap is now set." : "Saved.";
             };
             panel.Children.Add(FieldRow(cap, nameof(AppSettings.VaultCapGb)));
@@ -413,7 +412,7 @@ public sealed partial class SettingsPage : Page
                 if (State.Settings.ProtectedPaths.Count == 0) { clearStatus.Text = "No extra protected paths."; return; }
                 if (!await Ui.Confirm(XamlRoot, "Clear protected paths?", "This removes every extra protected path. Built-in Windows protections still apply.", "Clear all")) return;
                 State.Settings.ProtectedPaths.Clear();
-                State.Settings.Save();
+                Persist();
                 BuildPanel("Advanced");
             };
             panel.Children.Add(protectedText);
@@ -495,7 +494,7 @@ public sealed partial class SettingsPage : Page
             SettingsStore.CopyFrom(before, State.Settings);
             return;
         }
-        State.Settings.Save();
+        Persist();
         BuildPanel(category);
     }
 
@@ -511,7 +510,7 @@ public sealed partial class SettingsPage : Page
             SettingsStore.CopyFrom(before, State.Settings);
             return;
         }
-        State.Settings.Save();
+        Persist();
         BuildPanel(_selected);
     }
 
@@ -524,8 +523,15 @@ public sealed partial class SettingsPage : Page
             SettingsStore.CopyFrom(before, State.Settings);
             return;
         }
-        State.Settings.Save();
+        Persist();
         BuildPanel(_selected);
+    }
+
+    /// <summary>Saves the settings and syncs runtime flags that are read outside this page.</summary>
+    private static void Persist()
+    {
+        State.Settings.Save();
+        Audit.Redact = State.Settings.RedactAudit;
     }
 
     private async Task<bool> EnsureAdvancedUnlocked()

@@ -20,7 +20,7 @@ UpgradeBehavior: install
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/24f2008782/spacepilot/releases/download/v1.6.0/SpacePilot-1.6.0-x64.zip
-    InstallerSha256: a033eee7e3c92d322dd8db9ea070f02a0969b175764b5b5b6456fd0da3ac137a
+    InstallerSha256: cd0f59f5ac7aee1b0bec5cbc8a8d3d02fae5b9b8d0425f86e928ae40c523c7a3
 ManifestType: installer
 ManifestVersion: 1.6.0
 
