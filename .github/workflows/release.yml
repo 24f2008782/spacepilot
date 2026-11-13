@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - "v*"
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,21 +14,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check for existing release
+        id: existing
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${{ github.ref_name }}" --repo "${{ github.repository }}" --json tagName *> $null
+          if ($LASTEXITCODE -eq 0) {
+            "exists=true" >> $env:GITHUB_OUTPUT
+          } else {
+            "exists=false" >> $env:GITHUB_OUTPUT
+          }
+
       - name: Setup .NET 9
+        if: steps.existing.outputs.exists != 'true'
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
       - name: Test Core
+        if: steps.existing.outputs.exists != 'true'
         run: dotnet test tests/CDClean.Core.Tests/CDClean.Core.Tests.csproj -c Release
 
       - name: Publish app
+        if: steps.existing.outputs.exists != 'true'
         run: dotnet publish src/CDClean.App/CDClean.App.csproj -c Release -r win-x64 --self-contained false -o ./publish/spacepilot
 
       - name: Publish elevated helper
+        if: steps.existing.outputs.exists != 'true'
         run: dotnet publish src/CDClean.Elevated/CDClean.Elevated.csproj -c Release -r win-x64 --self-contained false -o ./publish/spacepilot
 
       - name: Package release
+        if: steps.existing.outputs.exists != 'true'
         shell: pwsh
         run: |
           $version = (Get-Content version.txt -Raw).Trim()
@@ -37,13 +54,16 @@ jobs:
           Compress-Archive -Path publish/spacepilot/* -DestinationPath $zip
           $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  $zip" | Set-Content "${zip}.sha256"
+          $notes = "docs/release-notes-${{ github.ref_name }}.md"
+          if (Test-Path $notes) { Copy-Item $notes release-notes.md } else { "See CHANGELOG.md." | Set-Content release-notes.md }
           "PACKAGE=$zip" | Out-File -FilePath $env:GITHUB_ENV -Append
           "SHA256=$hash" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Create GitHub release
+        if: steps.existing.outputs.exists != 'true'
         uses: softprops/action-gh-release@v2
         with:
           files: |
             ${{ env.PACKAGE }}
             ${{ env.PACKAGE }}.sha256
-          generate_release_notes: true
+          body_path: release-notes.md
