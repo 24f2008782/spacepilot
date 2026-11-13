@@ -1,0 +1,34 @@
+<Page x:Class="CDClean.App.Views.DuplicatesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:CDClean.App.Controls">
+  <Grid Padding="28,20" RowSpacing="12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <StackPanel Spacing="4">
+      <TextBlock Text="Duplicates" Style="{StaticResource TitleTextBlockStyle}"/>
+      <TextBlock Text="Files with identical content (same size and SHA-256). Every copy except the first of each group starts ticked, so one copy always stays." TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
+      <ComboBox x:Name="DrivePick" Width="300" PlaceholderText="Drive" VerticalAlignment="Center" SelectionChanged="DrivePick_SelectionChanged" ToolTipService.ToolTip="Pick a drive, or type a folder in the box next to it"/>
+      <TextBox x:Name="Root" Text="C:\Users" Width="240" VerticalAlignment="Center"/>
+      <Button x:Name="BrowseBtn" Content="Browse" Click="BrowseBtn_Click"/>
+      <NumberBox x:Name="MinMb" Value="1" Header="Min MB" Minimum="0" Maximum="100000" SpinButtonPlacementMode="Compact" VerticalAlignment="Bottom"/>
+      <Button x:Name="FindBtn" Content="Find" Click="FindBtn_Click" Style="{StaticResource AccentButtonStyle}"/>
+      <Button x:Name="CancelBtn" Content="Cancel" Click="CancelBtn_Click"/>
+    </StackPanel>
+    <StackPanel Grid.Row="2" Spacing="4">
+      <ProgressBar x:Name="Busy" IsIndeterminate="True" Visibility="Collapsed"/>
+      <TextBlock x:Name="Status" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
+    </StackPanel>
+    <c:ItemsGrid Grid.Row="3" x:Name="Table" LayoutKey="Duplicates" ColumnSpec="Name,Extra:Group,Size,Path:Folder,Modified" EmptyText="Pick a folder and press Find.">
+      <c:ItemsGrid.Actions>
+        <StackPanel Orientation="Horizontal" Spacing="4">
+          <Button x:Name="OpenBtn" Content="Show" Click="OpenBtn_Click"/>
+          <Button x:Name="RecycleBtn" Content="Recycle" Click="RecycleBtn_Click"/>
+        </StackPanel>
+      </c:ItemsGrid.Actions>
+    </c:ItemsGrid>
+  </Grid>
+</Page>

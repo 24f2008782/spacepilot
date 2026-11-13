@@ -1,0 +1,35 @@
+<Page x:Class="CDClean.App.Views.LargeFilesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:CDClean.App.Controls">
+  <Grid Padding="28,20" RowSpacing="12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <StackPanel Spacing="4">
+      <TextBlock Text="Large files" Style="{StaticResource TitleTextBlockStyle}"/>
+      <TextBlock Text="The biggest files in a folder." TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
+      <ComboBox x:Name="DrivePick" Width="300" PlaceholderText="Drive" VerticalAlignment="Center" SelectionChanged="DrivePick_SelectionChanged" ToolTipService.ToolTip="Pick a drive, or type a folder in the box next to it"/>
+      <TextBox x:Name="Root" Text="C:\Users" Width="240" VerticalAlignment="Center"/>
+      <Button x:Name="BrowseBtn" Content="Browse" Click="BrowseBtn_Click"/>
+      <NumberBox x:Name="MinMb" Value="100" Header="Min MB" Minimum="1" Maximum="100000" SpinButtonPlacementMode="Compact" VerticalAlignment="Bottom"/>
+      <Button x:Name="FindBtn" Content="Find" Click="FindBtn_Click" Style="{StaticResource AccentButtonStyle}"/>
+      <Button x:Name="CancelBtn" Content="Cancel" Click="CancelBtn_Click"/>
+    </StackPanel>
+    <StackPanel Grid.Row="2" Spacing="4">
+      <ProgressBar x:Name="Busy" IsIndeterminate="True" Visibility="Collapsed"/>
+      <TextBlock x:Name="Status" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
+    </StackPanel>
+    <c:ItemsGrid Grid.Row="3" x:Name="Table" LayoutKey="LargeFiles" ColumnSpec="Name,Path:Folder,Size,Modified,Age:Age (months),Risk" EmptyText="Pick a folder and press Find.">
+      <c:ItemsGrid.Actions>
+        <StackPanel Orientation="Horizontal" Spacing="4">
+          <Button x:Name="OpenBtn" Content="Show" Click="OpenBtn_Click"/>
+          <Button x:Name="ArchiveBtn" Content="Archive to backup" Click="ArchiveBtn_Click"/>
+          <Button x:Name="RecycleBtn" Content="Recycle" Click="RecycleBtn_Click"/>
+        </StackPanel>
+      </c:ItemsGrid.Actions>
+    </c:ItemsGrid>
+  </Grid>
+</Page>

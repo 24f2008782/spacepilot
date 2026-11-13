@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DiskWise icon, monochrome">
+  <!-- Single-colour mask version for documentation, print, and themed UI. Uses currentColor. -->
+  <g fill="currentColor" fill-rule="evenodd">
+    <path d="M256 78a178 178 0 1 0 0 356 178 178 0 0 0 0-356Zm0 50a128 128 0 1 1 0 256 128 128 0 0 1 0-256Z" opacity="0.95"/>
+    <path d="M378 110a30 30 0 0 1 30 30v60a30 30 0 0 1-30 30h-60a30 30 0 0 1 0-60h30v-30a30 30 0 0 1 30-30Z"/>
+    <rect x="203" y="252" width="26" height="50" rx="13"/>
+    <rect x="243" y="224" width="26" height="78" rx="13"/>
+    <rect x="283" y="196" width="26" height="106" rx="13"/>
+  </g>
+</svg>

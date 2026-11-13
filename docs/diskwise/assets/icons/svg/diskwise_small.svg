@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DiskWise icon, small-size optical variant">
+  <defs>
+    <linearGradient id="tileS" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B2E4C"/>
+      <stop offset="1" stop-color="#0A1424"/>
+    </linearGradient>
+    <linearGradient id="arcS" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#23B4E6"/>
+      <stop offset="1" stop-color="#41EFCE"/>
+    </linearGradient>
+    <linearGradient id="shardS" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFC24D"/>
+      <stop offset="1" stop-color="#FF8A1F"/>
+    </linearGradient>
+  </defs>
+  <!-- Simplified geometry: no fine bars, thicker ring, larger shard. Optimised for 16-24 px. -->
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#tileS)"/>
+  <circle cx="256" cy="256" r="132" fill="none" stroke="url(#arcS)" stroke-width="66"
+          stroke-linecap="round" stroke-dasharray="622.04 207.35"/>
+  <rect x="221" y="221" width="70" height="70" rx="18" fill="#FFFFFF" transform="rotate(45 256 256)"/>
+  <g transform="rotate(-12 351 161)">
+    <rect x="315" y="125" width="72" height="72" rx="18" fill="url(#shardS)"/>
+  </g>
+</svg>

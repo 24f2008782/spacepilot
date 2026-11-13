@@ -1,0 +1,84 @@
+# Each [[rule]] is one folder to clean.
+# action: "delete"  = regenerable cache, removed directly
+#         "archive" = user data, copied to E:\cdclean-backups, verified, then removed
+# safe:   false     = shown in scan, never run automatically
+# Paths use single quotes so backslashes are literal.
+
+[[rule]]
+name = "uv cache"
+explain = "Downloaded Python packages kept by uv. uv downloads them again the next time a project needs them. Nothing breaks; the next install is slower."
+path = '%LOCALAPPDATA%\uv\cache'
+older_than_days = 0
+action = "delete"
+
+[[rule]]
+name = "Temp files"
+explain = "Temporary files older than 2 days. Programs recreate what they need. Files in use are skipped."
+path = '%TEMP%'
+older_than_days = 2
+action = "delete"
+
+[[rule]]
+name = "VS Code caches"
+explain = "VS Code's caches and logs. VS Code rebuilds them on the next start. Settings, extensions and workspace state are not touched."
+path = '%APPDATA%\Code'
+include = ["Cache", "CachedData", "CachedExtensionVSIXs", "GPUCache", "logs"]
+depth = 1
+action = "delete"
+
+[[rule]]
+name = "Chrome cache"
+explain = "Chrome's page, code and GPU caches. Pages load a little slower once. Cookies, passwords, history and bookmarks are protected and never touched."
+path = '%LOCALAPPDATA%\Google\Chrome\User Data'
+include = ["Cache", "Code Cache", "GPUCache", "ShaderCache", "GrShaderCache", "GraphiteDawnCache", "DawnCache"]
+depth = 2
+action = "delete"
+
+[[rule]]
+name = "Brave cache"
+explain = "Brave's page, code and GPU caches. Pages load a little slower once. Cookies, passwords, history and bookmarks are protected and never touched."
+path = '%LOCALAPPDATA%\BraveSoftware\Brave-Browser\User Data'
+include = ["Cache", "Code Cache", "GPUCache", "ShaderCache", "GrShaderCache", "GraphiteDawnCache", "DawnCache"]
+depth = 2
+action = "delete"
+
+[[rule]]
+name = "Crash dumps"
+explain = "Memory dumps written when programs crashed. Only useful for sending to a developer. Nothing rebuilds them and nothing needs them."
+path = '%LOCALAPPDATA%\CrashDumps'
+action = "delete"
+
+[[rule]]
+name = "Playwright browsers"
+explain = "Browser builds downloaded by Playwright for automated testing. Playwright downloads them again (hundreds of MB) the next time tests run."
+path = '%LOCALAPPDATA%\ms-playwright'
+action = "delete"
+safe = false
+
+[[rule]]
+name = "Old Claude transcripts"
+explain = "Claude Code conversation logs older than 7 days. They are copied to the backup drive first and can be restored from Backups."
+path = '%USERPROFILE%\.claude\projects'
+older_than_days = 7
+action = "archive"
+
+[[rule]]
+name = "Python leftover (deleteme)"
+explain = "A folder Python's installer left behind marked for deletion. Nothing uses it."
+path = '%LOCALAPPDATA%\Python\pythoncore-3.14-64.0.deleteme'
+action = "delete"
+safe = false
+
+[[rule]]
+name = "VS Code web storage"
+explain = "Storage used by web-based views inside VS Code. Extensions may lose cached web data and ask you to sign in again."
+path = '%APPDATA%\Code\WebStorage'
+action = "delete"
+safe = false
+
+[[rule]]
+name = "User .cache folder"
+explain = "Caches from many command-line tools (pip, huggingface, and others). Tools rebuild them, but models and packages are downloaded again, which can be large."
+path = '%USERPROFILE%\.cache'
+action = "delete"
+safe = false

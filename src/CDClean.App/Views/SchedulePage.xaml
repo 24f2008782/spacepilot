@@ -1,0 +1,33 @@
+<Page x:Class="CDClean.App.Views.SchedulePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel Padding="28,20" Spacing="16" MaxWidth="760" HorizontalAlignment="Left">
+    <TextBlock Text="Schedule" Style="{StaticResource TitleTextBlockStyle}"/>
+    <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+               Text="Scheduled runs clean the rules ticked on the Rules page (by default, the safe ones). They never run admin tasks and never open a window. Each run is added to the Dashboard chart."/>
+    <Border Style="{StaticResource Card}">
+      <Grid ColumnSpacing="16" RowSpacing="16">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Center">
+          <TextBlock Text="Run weekly" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+          <TextBlock Text="Every Sunday" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+        </StackPanel>
+        <TimePicker Grid.Column="1" x:Name="WeeklyTime" ClockIdentifier="24HourClock"/>
+        <ToggleSwitch Grid.Column="2" x:Name="WeeklySwitch" Toggled="Switch_Toggled"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+          <TextBlock Text="Run daily" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+          <TextBlock Text="Every day" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+        </StackPanel>
+        <TimePicker Grid.Row="1" Grid.Column="1" x:Name="DailyTime" ClockIdentifier="24HourClock"/>
+        <ToggleSwitch Grid.Row="1" Grid.Column="2" x:Name="DailySwitch" Toggled="Switch_Toggled"/>
+      </Grid>
+    </Border>
+    <StackPanel Orientation="Horizontal" Spacing="8">
+      <Button x:Name="RunNowBtn" Content="Run a scheduled clean now" Click="RunNowBtn_Click"/>
+    </StackPanel>
+    <TextBlock x:Name="Status" TextWrapping="Wrap"/>
+  </StackPanel>
+</Page>

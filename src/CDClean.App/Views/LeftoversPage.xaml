@@ -1,0 +1,32 @@
+<Page x:Class="CDClean.App.Views.LeftoversPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:CDClean.App.Controls">
+  <Grid Padding="28,20" RowSpacing="12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <StackPanel Spacing="4">
+      <TextBlock Text="Leftovers" Style="{StaticResource TitleTextBlockStyle}"/>
+      <TextBlock Text="Folders in AppData and ProgramData that match no installed program. Settings in AppData and ProgramData are always checked (they live on the system drive even for apps installed elsewhere); pick drives to also check their Program Files. This is a rough match by name: check each folder before removing it." TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
+      <ComboBox x:Name="DrivePick" Width="300" Header="Also check Program Files on" VerticalAlignment="Bottom"/>
+      <Button x:Name="FindBtn" VerticalAlignment="Bottom" Content="Find leftovers" Click="FindBtn_Click" Style="{StaticResource AccentButtonStyle}"/>
+    </StackPanel>
+    <StackPanel Grid.Row="2" Spacing="4">
+      <ProgressBar x:Name="Busy" IsIndeterminate="True" Visibility="Collapsed"/>
+      <TextBlock x:Name="Status" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
+    </StackPanel>
+    <c:ItemsGrid Grid.Row="3" x:Name="Table" LayoutKey="Leftovers" ColumnSpec="Name,Path,Size,Count,Modified:Last changed,Risk" EmptyText="Press Find leftovers to compare AppData and ProgramData with installed programs.">
+      <c:ItemsGrid.Actions>
+        <StackPanel Orientation="Horizontal" Spacing="4">
+          <Button x:Name="OpenBtn" Content="Open" Click="OpenBtn_Click"/>
+          <Button x:Name="KeepBtn" Content="Keep (hide)" Click="KeepBtn_Click"/>
+          <Button x:Name="ArchiveBtn" Content="Archive to backup" Click="ArchiveBtn_Click"/>
+          <Button x:Name="RecycleBtn" Content="Recycle" Click="RecycleBtn_Click"/>
+        </StackPanel>
+      </c:ItemsGrid.Actions>
+    </c:ItemsGrid>
+  </Grid>
+</Page>

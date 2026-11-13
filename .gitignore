@@ -1,0 +1,22 @@
+# Build outputs
+**/bin/
+**/obj/
+**/publish/
+.vs/
+TestResults/
+*.user
+*.suo
+
+# Local release/scratch artifacts
+*.zip
+*.zip.sha256
+*.nupkg
+*.log
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Local machine configuration
+.vscode/
+.idea/

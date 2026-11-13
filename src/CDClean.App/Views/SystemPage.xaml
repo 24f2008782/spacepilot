@@ -1,0 +1,39 @@
+<Page x:Class="CDClean.App.Views.SystemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid Padding="28,20" ColumnSpacing="20">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/><ColumnDefinition Width="420"/>
+    </Grid.ColumnDefinitions>
+    <ScrollViewer>
+      <StackPanel Spacing="12">
+        <TextBlock Text="System cleanup (admin)" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                   Text="Each task asks Windows for admin permission (a UAC prompt) and runs on its own. Tasks marked with a warning cannot be undone."/>
+        <StackPanel x:Name="Cards" Spacing="10"/>
+        <Button Content="Run maintenance analysis (read-only)" Click="Analyse_Click" Margin="0,8,0,0"/>
+        <Button Content="List startup entries (read-only)" Click="Startup_Click" Margin="0,4,0,0"/>
+        <Button Content="List VHDX files (read-only)" Click="Vhdx_Click" Margin="0,4,0,0"/>
+        <Button Content="Find dev caches (read-only)" Click="DevCaches_Click" Margin="0,4,0,0"/>
+        <Button Content="Find downloads (read-only)" Click="Downloads_Click" Margin="0,4,0,0"/>
+        <Button Content="Find browser caches (read-only)" Click="BrowserCaches_Click" Margin="0,4,0,0"/>
+        <Button Content="Find orphan services (read-only)" Click="OrphanServices_Click" Margin="0,4,0,0"/>
+        <Button Content="Find MSI cache (read-only)" Click="MsiCache_Click" Margin="0,4,0,0"/>
+        <Button Content="Show maintenance console steps" Click="MaintenanceConsole_Click" Margin="0,4,0,0"/>
+        <TextBlock x:Name="AnalysisText" TextWrapping="Wrap" FontSize="12" IsTextSelectionEnabled="True"/>
+      </StackPanel>
+    </ScrollViewer>
+    <Border Grid.Column="1" Style="{StaticResource Card}">
+      <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TaskTitle" Text="No task running" Style="{StaticResource SubtitleTextBlockStyle}"/>
+        <ProgressBar Grid.Row="1" x:Name="Bar" Maximum="100"/>
+        <TextBlock Grid.Row="2" x:Name="Percent" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+        <TextBox Grid.Row="3" x:Name="LogBox" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
+                 FontFamily="Consolas" FontSize="12" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+      </Grid>
+    </Border>
+  </Grid>
+</Page>

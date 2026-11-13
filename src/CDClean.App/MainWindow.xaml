@@ -1,0 +1,33 @@
+<Window x:Class="CDClean.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="SpacePilot">
+  <Window.SystemBackdrop>
+    <MicaBackdrop />
+  </Window.SystemBackdrop>
+  <NavigationView x:Name="Nav" IsBackButtonVisible="Collapsed" IsSettingsVisible="True"
+                  PaneDisplayMode="Auto" OpenPaneLength="220" ExpandedModeThresholdWidth="1100" CompactModeThresholdWidth="640" SelectionChanged="Nav_SelectionChanged">
+    <NavigationView.MenuItems>
+      <NavigationViewItem Content="Dashboard" Tag="Dashboard" Icon="Home" />
+      <NavigationViewItemHeader Content="Understand" />
+      <NavigationViewItem Content="Disk map" Tag="DiskMap" Icon="Map" />
+      <NavigationViewItemHeader Content="Cleaning" />
+      <NavigationViewItem Content="Scan" Tag="Scan" Icon="Find" />
+      <NavigationViewItem Content="Clean" Tag="Clean" Icon="Delete" />
+      <NavigationViewItem Content="System (admin)" Tag="System" Icon="Repair" />
+      <NavigationViewItemHeader Content="Find unused" />
+      <NavigationViewItem Content="Apps" Tag="Apps" Icon="AllApps" />
+      <NavigationViewItem Content="Leftovers" Tag="Leftovers" Icon="Folder" />
+      <NavigationViewItem Content="Old files" Tag="OldFiles" Icon="Clock" />
+      <NavigationViewItemHeader Content="Arrange" />
+      <NavigationViewItem Content="Large files" Tag="LargeFiles" Icon="Sort" />
+      <NavigationViewItem Content="Duplicates" Tag="Duplicates" Icon="Copy" />
+      <NavigationViewItem Content="Organize folder" Tag="Organizer" Icon="MoveToFolder" />
+      <NavigationViewItemHeader Content="Safety" />
+      <NavigationViewItem Content="Backups" Tag="Backups" Icon="Save" />
+      <NavigationViewItem Content="Schedule" Tag="Schedule" Icon="Calendar" />
+      <NavigationViewItem Content="Rules" Tag="Rules" Icon="List" />
+    </NavigationView.MenuItems>
+    <Frame x:Name="ContentFrame" />
+  </NavigationView>
+</Window>

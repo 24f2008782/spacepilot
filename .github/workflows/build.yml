@@ -1,0 +1,43 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore src/CDClean.App/CDClean.App.csproj
+
+      - name: Build
+        run: dotnet build src/CDClean.App/CDClean.App.csproj -c Release
+
+      - name: Test Core
+        run: dotnet test tests/CDClean.Core.Tests/CDClean.Core.Tests.csproj -c Release
+
+      - name: Publish app
+        run: dotnet publish src/CDClean.App/CDClean.App.csproj -c Release -r win-x64 --self-contained false -o ./publish/x64
+
+      - name: Publish elevated helper
+        run: dotnet publish src/CDClean.Elevated/CDClean.Elevated.csproj -c Release -r win-x64 --self-contained false -o ./publish/x64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpacePilot-x64
+          path: ./publish/x64

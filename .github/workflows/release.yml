@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Test Core
+        run: dotnet test tests/CDClean.Core.Tests/CDClean.Core.Tests.csproj -c Release
+
+      - name: Publish app
+        run: dotnet publish src/CDClean.App/CDClean.App.csproj -c Release -r win-x64 --self-contained false -o ./publish/spacepilot
+
+      - name: Publish elevated helper
+        run: dotnet publish src/CDClean.Elevated/CDClean.Elevated.csproj -c Release -r win-x64 --self-contained false -o ./publish/spacepilot
+
+      - name: Package release
+        shell: pwsh
+        run: |
+          $version = (Get-Content version.txt -Raw).Trim()
+          $zip = "SpacePilot-$version-x64.zip"
+          Compress-Archive -Path publish/spacepilot/* -DestinationPath $zip
+          $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $zip" | Set-Content "${zip}.sha256"
+          "PACKAGE=$zip" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "SHA256=$hash" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.PACKAGE }}
+            ${{ env.PACKAGE }}.sha256
+          generate_release_notes: true
